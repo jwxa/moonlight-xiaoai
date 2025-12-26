@@ -1,0 +1,65 @@
+#!/bin/sh
+# Quick play script - Start audio streaming with one command
+
+export LD_LIBRARY_PATH=/tmp/moonlight/libs
+CERT_DIR="/tmp/moonlight/certs"
+
+# Default configuration
+SERVER="${MOONLIGHT_SERVER:-10.0.0.14}"
+APP="${MOONLIGHT_APP:-Desktop}"
+
+# Show usage
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "Usage: $0 [server] [app]"
+    echo ""
+    echo "Examples:"
+    echo "  $0                    # Stream Desktop from 10.0.0.14"
+    echo "  $0 10.0.0.14          # Stream Desktop from specific server"
+    echo "  $0 10.0.0.14 Steam    # Stream Steam"
+    echo ""
+    echo "Environment variables:"
+    echo "  MOONLIGHT_SERVER - Default server IP (default: 10.0.0.14)"
+    echo "  MOONLIGHT_APP    - Default app name (default: Desktop)"
+    exit 0
+fi
+
+# Parse arguments
+[ -n "$1" ] && SERVER="$1"
+[ -n "$2" ] && APP="$2"
+
+echo "Starting Moonlight Audio Stream"
+echo "   Server: $SERVER"
+echo "   App: $APP"
+echo ""
+
+# Check pairing
+if [ ! -f "$CERT_DIR/client.pem" ]; then
+    echo "Not paired! Pairing now..."
+    /tmp/moonlight/moonlight-armhf -keydir "$CERT_DIR" pair "$SERVER"
+    if [ $? -ne 0 ]; then
+        echo "Pairing failed!"
+        exit 1
+    fi
+    echo "Paired successfully!"
+    echo ""
+fi
+
+# Start streaming
+# Note: Removed -platform fake because it disables audio output
+# Let moonlight auto-detect platform or use sdl
+# e.g. ./moonlight-armhf stream -platform oh2p -viewonly -audio dmixer -width 640 -height 480 -bitrate 1000 -fps 30 -keydir=/tmp/moonlight/certs -app "Desktop" "10.0.0.14"
+/tmp/moonlight/moonlight-armhf \
+    -platform oh2p \
+    -keydir "$CERT_DIR" \
+    -viewonly \
+    -width 640 \
+    -height 480 \
+    -bitrate 1000 \
+    -fps 30 \
+    -bitrate 5000 \
+    -nosops \
+    -audio dmixer \
+    stream -app "$APP" "$SERVER"
+
+
+
