@@ -1,0 +1,21 @@
+# FFmpeg 源码
+FFmpeg/
+
+# 构建输出
+output/
+build/
+
+# 临时文件
+build-inside-docker.sh
+*.log
+*.tmp
+
+# 备份文件
+*-old.bat
+*-v2.bat
+
+# 编译产物
+*.o
+*.a
+*.so
+*.so.*
