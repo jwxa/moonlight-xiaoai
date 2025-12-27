@@ -1,9 +1,9 @@
 # 一、项目
 Moonlight-XiaoAI
 ## 介绍
-串流工具moonlight的音箱版本
-功能：只输出声音
-特性：低延迟
+* 串流工具moonlight的音箱版本
+* 功能：只输出声音
+* 特性：低延迟
 
 # 二、快速开始
 > [!IMPORTANT]
@@ -260,29 +260,29 @@ root@OH2P:/tmp/moonlight/libs# ln -s libgamestream.so.2.6.2 libgamestream.so.4
 
 # 四、写给自己
 ## 4.1 TODO
-sunshine服务端改造，增加audio-only模式，减少网络带宽占用
-配套更新当前client端
+- sunshine服务端改造，增加audio-only模式，减少网络带宽占用
+- 配套更新当前client端
 
 ## 4.2 复盘
 ### 调研踩坑步骤
-#### 1. 背景调研
+#### 1 背景调研
 ##### 1.1 实施方法
-拉取最新固件解包ROM 分析系统架构，已经存在的依赖库
-rom\mico_all_f009a180c_1.58.6.bin
+- 拉取最新固件解包ROM 分析系统架构，已经存在的依赖库
+[mico_all_f009a180c_1.58.6.bin](rom\mico_all_f009a180c_1.58.6.bin)
 [open-xiaoai](https://github.com/idootop/open-xiaoai) [patch脚本/extract.sh](https://github.com/idootop/open-xiaoai/blob/main/packages/client-patch/src/extract.sh)
 
 ##### 1.2 ✅ 验证
-AI分析结果文档：
+- AI分析结果文档：
 [boot-process-analysis.md](docs\boot-process-analysis.md)
 
 ##### 1.3 接下来的步骤
-1. 🎯 让AI分析Moonlight移植项目可行性
+- 🎯 让AI分析Moonlight移植项目可行性
 
-#### 2. Moonlight 移植项目可行性调研
+#### 2 Moonlight 移植项目可行性调研
 ##### 2.1 实施方法
-1. 拉取moonlight-embedded代码让AI分析
-2. AI写一个程序验证依赖库
-3. AI对2中的验证程序创建脚本，docker交叉编译环境的搭建
+- 拉取moonlight-embedded代码让AI分析
+- AI写一个程序验证依赖库
+- AI对验证程序创建脚本，支持docker交叉编译环境
 
 ##### 2.2 ✅ 验证
 可行性调研分析文档
@@ -323,8 +323,8 @@ CPU 架构:   arm (ARM32)
 ```
 ##### 2.3 遇到的问题
 ###### 2.3.1 内核版本问题
-编译的二进制文件要求 **Linux 内核 5.4.0**，但音箱只有 **4.9.61**
-使用 **Ubuntu 16.04** 编译，它会生成兼容旧内核的二进制文件：
+* 编译的二进制文件要求 **Linux 内核 5.4.0**，但音箱只有 **4.9.61**
+* 使用 **Ubuntu 16.04** 编译，它会生成兼容旧内核的二进制文件：
 - 目标内核：3.2.0（远低于音箱的 4.9.61）✅
 - glibc：2.23（兼容音箱的 2.25）✅
 - 动态链接器：`/lib/ld-linux-armhf.so.3`（正确）✅
@@ -358,7 +358,7 @@ SUCCESS! All libraries built successfully!
 1. ✅ 编译 FFmpeg
 2. 🚀 开始编译 Moonlight
 
-#### 4. 编译 Moonlight
+#### 4 编译 Moonlight
 ##### 4.1 实施方法
 AI写编译脚本
 
@@ -367,9 +367,9 @@ client端连接sunshine成功
 
 ##### 4.3 遇到的问题
 ###### 4.3.1 pair失败
-刚开始分析以为是相关libssl.so和libcrypto.so过老导致加密算法不支持，手动编译1.0.2版本后没有解决
-继续分析：**HTTP 连接正常** **HTTPS 测试失败** 怀疑和证书有关
-AI继续读了下源码 创建测试脚本：setup-moonlight-certs.sh 
+- 刚开始分析以为是相关libssl.so和libcrypto.so过老导致加密算法不支持，手动编译1.0.2版本后没有解决
+- 继续分析：**HTTP 连接正常** **HTTPS 测试失败** 怀疑和证书有关
+- AI继续读了下源码 创建测试脚本：setup-moonlight-certs.sh 
 ```
 # Moonlight 默认使用 ~/.cache/moonlight 或 ~/.config/moonlight
 CERT_DIR="$HOME/.cache/moonlight"
@@ -378,13 +378,13 @@ CERT_DIR="$HOME/.cache/moonlight"
 ```
 mkdir: can't create directory '/root/.cache/': Read-only file system
 ```
-1. ✓ **curl 和 OpenSSL 编译成功**
-2. ✓ **HTTP 连接正常**
-3. ✗ **HTTPS 测试失败** - 这是正常的！需要客户端证书
-4. ✗ **moonlight 无法生成证书** - `/root/.cache` 是只读的
+- ✓ **curl 和 OpenSSL 编译成功**
+- ✓ **HTTP 连接正常**
+- ✗ **HTTPS 测试失败** - 这是正常的！需要客户端证书
+- ✗ **moonlight 无法生成证书** - `/root/.cache` 是只读的
 
-这导致 moonlight 无法在默认位置生成客户端证书。
-解决方案：使用 `-keydir` 参数指定可写目录（`/tmp/moonlight/certs`）。
+- 这导致 moonlight 无法在默认位置生成客户端证书。
+- 解决方案：使用 `-keydir` 参数指定可写目录（`/tmp/moonlight/certs`）。
 ####### 生成的文件
 ```bash
 ls -la /tmp/moonlight/certs/
@@ -840,7 +840,6 @@ If you see audio devices above, try:
 
 ###### 音频路由图
 
-```
 输入源：
 ├─ Type-C USB (UAC2Gadget) → usb_up / CaptureUsbDown
 ├─ 蓝牙 (bluetooth control)
@@ -861,7 +860,8 @@ If you see audio devices above, try:
 输出：
 └─ hw:0,2 (TDM-C-acm8625p) ← 物理扬声器
 
-确认输出设备要选择dmixer, 编写脚本测试直接通过dmixer能否输出声音，成功
+> [!IMPORTANT]
+> 确认输出设备要选择dmixer，编写脚本测试直接通过dmixer能否输出声音，成功
 ```
 #!/bin/sh
 
