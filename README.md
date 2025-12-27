@@ -336,10 +336,9 @@ CPU 架构:   arm (ARM32)
 
 #### 3. 开始编译 FFmpeg
 ##### 3.1 实施方法
-AI写编译脚本
-[README.md](ffmpeg-build\README.md)
-**编译脚本**[build-ffmpeg.bat](ffmpeg-build\build-ffmpeg.bat)
-[FFmpeg 编译详细指南](ffmpeg-build\BUILD_GUIDE.md)
+* AI写编译脚本 [README.md](ffmpeg-build\README.md)
+* [build-ffmpeg.bat](ffmpeg-build\build-ffmpeg.bat)
+* [FFmpeg 编译详细指南](ffmpeg-build\BUILD_GUIDE.md)
 
 ##### 3.2 ✅ 验证
 
@@ -355,15 +354,15 @@ AI写编译脚本
 SUCCESS! All libraries built successfully!
 ```
 ##### 3.3 接下来的步骤
-1. ✅ 编译 FFmpeg
-2. 🚀 开始编译 Moonlight
+- ✅ 编译 FFmpeg
+- 🚀 开始编译 Moonlight
 
 #### 4 编译 Moonlight
 ##### 4.1 实施方法
-AI写编译脚本
+* AI写编译脚本 [build-moonlight-xiaoai.bat](moonlight-build/build-moonlight-xiaoai.bat)
 
 ##### 4.2 ✅ 验证
-client端连接sunshine成功
+- client端连接sunshine成功
 
 ##### 4.3 遇到的问题
 ###### 4.3.1 pair失败
@@ -395,7 +394,7 @@ ls -la /tmp/moonlight/certs/
 ```
 
 ###### 4.3.2 没有输出声音
-让AI写分析脚本 ./diagnose-audio.sh 
+- 让AI写分析脚本 ./diagnose-audio.sh 
 ```bash
 root@OH2P:/tmp/moonlight# ./diagnose-audio.sh 
 
@@ -945,12 +944,12 @@ SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)
 
 # 五、巨人的肩膀
 ## 项目列表
-[open-xiaoai](https://github.com/idootop/open-xiaoai)
-[moonlight-embedded](https://github.com/moonlight-stream/moonlight-embedded)
-[moonlight-common-c](https://github.com/moonlight-stream/moonlight-common-c)
-[ffmpeg](https://github.com/FFmpeg/FFmpeg.git)
-...
+- [open-xiaoai](https://github.com/idootop/open-xiaoai)
+- [moonlight-embedded](https://github.com/moonlight-stream/moonlight-embedded)
+- [moonlight-common-c](https://github.com/moonlight-stream/moonlight-common-c)
+- [ffmpeg](https://github.com/FFmpeg/FFmpeg.git)
+- ...
 
 ## 工具
-kira
-claude
+- kira
+- claude
